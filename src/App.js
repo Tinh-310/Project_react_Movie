@@ -11,6 +11,8 @@ import ErrorBoundary from "components/ErrorBoundary";
 
 // Dùng lazyload để tối ưu tốc độ tải trang
 const HomePage = lazy(() => import("./modules/Home/pages/HomePage"));
+const LoginPage = lazy(() => import ("./modules/Auth/pages/Login"));
+const RegiserPage = lazy(() => import ("./modules/Auth/pages/Regiser"));
 const MovieShowing = lazy(() => import("./modules/Movies/pages/MovieShowing"));
 const MovieComming = lazy(() => import("./modules/Movies/pages/MovieComming"));
 const MovieDetails = lazy(() => import("./modules/Movies/pages/MovieDetails"));
@@ -21,6 +23,8 @@ function App() {
       <Suspense fallback={<div>Loading Route....</div>}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path = "/login" element={<LoginPage />}/>
+          <Route path = "/register" element={<RegiserPage />}/>
 
           <Route path="/movies">
             <Route path="now-showing" element={<MovieShowing />} />
