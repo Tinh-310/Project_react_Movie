@@ -1,40 +1,21 @@
 // libs
-import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Suspense } from "react";
+import { useRoutes } from "react-router-dom";
 import { Global } from "@emotion/react";
 
 // component
-import NotFound from "./components/NotFound";
-
-import globalStyles from "./globalStyles";
+import NotFound from "components/NotFound";
 import ErrorBoundary from "components/ErrorBoundary";
 
-// Dùng lazyload để tối ưu tốc độ tải trang
-const HomePage = lazy(() => import("./modules/Home/pages/HomePage"));
-const LoginPage = lazy(() => import ("./modules/Auth/pages/Login"));
-const RegiserPage = lazy(() => import ("./modules/Auth/pages/Regiser"));
-const MovieShowing = lazy(() => import("./modules/Movies/pages/MovieShowing"));
-const MovieComming = lazy(() => import("./modules/Movies/pages/MovieComming"));
-const MovieDetails = lazy(() => import("./modules/Movies/pages/MovieDetails"));
+import routes from "./routes";
+import globalStyles from "./globalStyles";
 
 function App() {
+  let element = useRoutes(routes);
+
   return (
     <ErrorBoundary>
-      <Suspense fallback={<div>Loading Route....</div>}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path = "/login" element={<LoginPage />}/>
-          <Route path = "/register" element={<RegiserPage />}/>
-
-          <Route path="/movies">
-            <Route path="now-showing" element={<MovieShowing />} />
-            <Route path="coming-soon" element={<MovieComming />} />
-            <Route path=":movieId" element={<MovieDetails />} />
-          </Route>
-
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+      <Suspense fallback={<div>Loading Route....</div>}>{element}</Suspense>
       <Global styles={globalStyles} />
     </ErrorBoundary>
   );
